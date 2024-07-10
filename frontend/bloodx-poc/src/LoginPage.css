@@ -1,0 +1,31 @@
+/* src/LoginPage.css */
+.login-box {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .login-box h1 {
+    color: #150202;
+  }
+
+  
+
+
+  
+  .login-box input {
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  
+  .login-box input:focus {
+    border-color: #d32f2f;
+    box-shadow: 0 0 0 4px rgba(211, 47, 47, 0.2);
+  }
+  
+  .login-box button {
+    transition: background-color 0.2s;
+  }
+  
+  .login-box button:hover {
+    background-color: #c62828;
+  }
+  
