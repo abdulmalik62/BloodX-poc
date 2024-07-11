@@ -14,7 +14,7 @@ const LoginPage: React.FC = () => {
     console.log('Email:', email);
     console.log('Password:', password);
     // Assume login is successful
-    navigate('/admin');
+    navigate('/home');
   };
 
   return (

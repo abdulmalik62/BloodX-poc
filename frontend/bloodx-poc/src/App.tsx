@@ -1,8 +1,12 @@
 // src/App.tsx
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import Login from './LoginPage';
 import HomePage from './Homepage';
+
+
 
 
 const App: React.FC = () => {
