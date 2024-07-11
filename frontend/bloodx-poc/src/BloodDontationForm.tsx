@@ -145,7 +145,7 @@ const BloodDonationForm: React.FC = () => {
         />
       </div>
       <div className="mb-4">
-        <label htmlFor="unit" className="block text-gray-700 font-bold mb-2">Unit:</label>s
+        <label htmlFor="unit" className="block text-gray-700 font-bold mb-2">Unit:</label>
         <select
           id="unit"
           name="unit"
