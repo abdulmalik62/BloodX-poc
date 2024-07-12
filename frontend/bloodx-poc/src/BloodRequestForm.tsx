@@ -110,9 +110,9 @@ const BloodRequestForm: React.FC = () => {
           className="w-full px-3 py-2 border border-gray-300 rounded-lg"
         >
           <option value="">Select Age Group</option>
-          <option value="Senior">Infant</option>
+          <option value="Infant">Infant</option>
           <option value="Child">Child</option>
-          <option value="Adult">Teenage</option>
+          <option value="Teenage">Teenage</option>
           <option value="Adult">Adult</option>
           <option value="Senior">Senior</option>
         </select>

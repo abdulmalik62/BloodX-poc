@@ -1,7 +1,7 @@
 // src/HomePage.tsx
 import React from 'react';
 import BloodRequestForm from './BloodRequestForm';
-// import BloodDelivery from './PatientDataPage';
+import BloodDelivery from './PatientDataPage';
 import Navbar from './Navbar';
 
 
@@ -17,6 +17,7 @@ const HomePage: React.FC = () => {
         </div>
         <div>
           {<BloodRequestForm/>}
+          {<BloodDelivery/>}
         
         </div>
       </div>
