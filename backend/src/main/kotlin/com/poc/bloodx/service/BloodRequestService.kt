@@ -11,7 +11,6 @@ class BloodRequestService(private  val bloodRequestRepository: BloodRequestRepos
         return bloodRequestRepository.save(bloodRequest)
     }
 
-    
     fun getAllBloodRequest (): List<BloodRequest> {
         return bloodRequestRepository.findAll()
     }

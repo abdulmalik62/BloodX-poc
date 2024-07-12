@@ -21,7 +21,7 @@ class BloodRequestController(private val bloodRequestService: BloodRequestServic
     }
 
     @GetMapping("/GetAll")
-    fun getAllAdmins(): ResponseEntity<List<BloodRequest>> {
+    fun getAllBloodRequest(): ResponseEntity<List<BloodRequest>> {
         val bloodRequest = bloodRequestService.getAllBloodRequest()
         return ResponseEntity(bloodRequest, HttpStatus.OK)
     }
