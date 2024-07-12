@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.CrossOrigin
 // import org.springframework.security.access.prepost.PreAuthorize
 
 @RestController
 @RequestMapping("/BloodX/Admins")
+@CrossOrigin("\${CrossOrigin}")
 class AdminController(private  val adminService: AdminService) {
 
     @PostMapping("/Create")
@@ -26,7 +28,6 @@ class AdminController(private  val adminService: AdminService) {
     fun getAllAdmins(): ResponseEntity<List<Admin>> {
         val admins = adminService.getAllAdmins()
         return ResponseEntity(admins, HttpStatus.OK)
-    }
-    
+    } 
 
 }
