@@ -11,10 +11,12 @@ interface FormData {
   phoneNumber: string;
   location: string;
   unit: string;
+  customUnit:string;
+  date: string;
   condition: string;
 }
 
-const BloodDonationForm: React.FC = () => {
+const BloodRequestForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     patientName: '',
     ageGroup: '',
@@ -23,21 +25,53 @@ const BloodDonationForm: React.FC = () => {
     phoneNumber: '',
     location: '',
     unit: '',
+    customUnit: '',
+    date: '',
     condition: '',
   });
 
+ 
+  const [unit, setUnit] = useState<string>('1');
+  const [customUnit, setCustomUnit] = useState<string>('');
+  const [isCustom, setIsCustom] = useState<boolean>(false);
   const [showModal, setShowModal] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value,
-    }));
+
+    // Handle unit selection separately
+    if (name === 'unit') {
+      if (value === 'custom') {
+        setIsCustom(true);
+        setFormData((prevState) => ({
+          ...prevState,
+          unit: '',
+         
+        }));
+      } else {
+        setIsCustom(false);
+        setFormData((prevState) => ({
+          ...prevState,
+          unit: value,
+        
+        }));
+      }
+    
+    } else {
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const existingData = JSON.parse(localStorage.getItem('patientData') || '[]');
+    const updatedData = [...existingData, formData];
+    localStorage.setItem('patientData',JSON.stringify(updatedData));
+    const finalUnit = isCustom ? formData.customUnit : formData.unit;
+    console.log('Requested Units;', finalUnit);
     console.log(formData);
     setShowModal(true);
   };
@@ -49,7 +83,7 @@ const BloodDonationForm: React.FC = () => {
   return (
     <>
     <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-6 border border-gray-300 rounded-lg shadow-lg bg-white">
-      <h1 className="text-2xl font-bold mb-4">Welcome to the Blood Donation Portal</h1>
+      <h1 className="text-2xl font-bold mb-4">Welcome to the Blood Request Portal</h1>
       <div className="mb-4">
         <label htmlFor="patientName" className="block text-gray-700 font-bold mb-2">Patient Name:</label>
         <input
@@ -59,7 +93,7 @@ const BloodDonationForm: React.FC = () => {
           value={formData.patientName}
           onChange={handleChange}
           maxLength={30}
-          pattern="[A-Za-z]+"
+          pattern="[A-Za-z\s]+"
           title="Only alphabetical letters are allowed"
           required
           className="w-full px-3 py-2 border border-gray-300 rounded-lg"
@@ -76,7 +110,9 @@ const BloodDonationForm: React.FC = () => {
           className="w-full px-3 py-2 border border-gray-300 rounded-lg"
         >
           <option value="">Select Age Group</option>
+          <option value="Senior">Infant</option>
           <option value="Child">Child</option>
+          <option value="Adult">Teenage</option>
           <option value="Adult">Adult</option>
           <option value="Senior">Senior</option>
         </select>
@@ -145,24 +181,51 @@ const BloodDonationForm: React.FC = () => {
         />
       </div>
       <div className="mb-4">
-        <label htmlFor="unit" className="block text-gray-700 font-bold mb-2">Unit:</label>
+        <label htmlFor="unit" className="block text-gray-700 font-bold mb-2">
+          Units:
         <select
           id="unit"
           name="unit"
-          value={formData.unit}
+          value={isCustom ? 'custom' : formData.unit}
           onChange={handleChange}
+          disabled={isCustom}
           required
           className="w-full px-3 py-2 border border-gray-300 rounded-lg"
         >
           <option value="">Select Unit</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
+          <option value="1">1 unit</option>
+          <option value="2">2 units</option>
+          <option value="3">3 units</option>
+          <option value="4">4 units</option>
+          <option value="5">5 units</option>
+          <option value="10">10 units</option>
+          <option value="custom">Other </option>
         </select>
+        </label>
+        {isCustom && (
+          <label className="block text-gray-700 font-bold mb-2">
+            Custom Units:
+            <input 
+            type ="number" 
+            name ="customUnit" 
+            value={formData.customUnit} onChange={handleChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg"/>
+          </label>
+        )}
       </div>
       <div className="mb-4">
-        <label htmlFor="condition" className="block text-gray-700 font-bold mb-2">Condition/Reason for Blood:</label>
+        <label htmlFor="date" className="block text-gray-700 font-bold mb-2"> Required Before:</label>
+        <input
+           type="date"
+           id="date"
+           name="date"
+           value={formData.date}
+           onChange={handleChange}
+           required
+           className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+           />  
+      </div>
+      <div className="mb-4">
+        <label htmlFor="condition" className="block text-gray-700 font-bold mb-2">Condition/Reason for Requirement:</label>
         <textarea
           id="condition"
           name="condition"
@@ -176,13 +239,7 @@ const BloodDonationForm: React.FC = () => {
       <button type="submit" className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
         Submit
       </button>
-      <div className="mt-6 p-4 bg-gray-100 border-l-4 border-blue-500">
-        <h3 className="text-lg font-bold">Thank You Note</h3>
-        <p>
-          Thank you for your generosity and willingness to donate blood. Your contribution is invaluable and will help save lives. 
-          We, along with the recipients, are extremely grateful for your selflessness and support.
-        </p>
-      </div>
+     
     </form>
 
     <Modal show = {showModal} onHide={handleClose} centered>
@@ -199,4 +256,4 @@ const BloodDonationForm: React.FC = () => {
   );
 };
 
-export default BloodDonationForm;
+export default BloodRequestForm;
