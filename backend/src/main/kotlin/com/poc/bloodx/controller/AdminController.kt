@@ -8,15 +8,22 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.GetMapping
 
 @RestController
 @RequestMapping("/BloodX/Admins")
 class AdminController(private  val adminService: AdminService) {
 
-    @PostMapping
+    @PostMapping("/Create")
     fun createAdmin(@RequestBody admin: Admin) : ResponseEntity<Admin>{
         val savedAdmin = adminService.saveAdmin(admin)
         return ResponseEntity(savedAdmin, HttpStatus.CREATED)
-
     }
+
+    @GetMapping("/GetAll")
+    fun getAllAdmins(): ResponseEntity<List<Admin>> {
+        val admins = adminService.getAllAdmins()
+        return ResponseEntity(admins, HttpStatus.OK)
+    }
+    
 }
