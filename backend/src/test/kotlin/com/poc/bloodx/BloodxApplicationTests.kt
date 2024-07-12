@@ -1,10 +1,10 @@
-package sampleBloodX.BloodX
+package com.poc.bloodx
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class BloodXApplicationTests {
+class BloodxApplicationTests {
 
 	@Test
 	fun contextLoads() {
