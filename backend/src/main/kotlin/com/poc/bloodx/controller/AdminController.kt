@@ -28,6 +28,6 @@ class AdminController(private  val adminService: AdminService) {
     fun getAllAdmins(): ResponseEntity<List<Admin>> {
         val admins = adminService.getAllAdmins()
         return ResponseEntity(admins, HttpStatus.OK)
-    } 
+    }
 
 }

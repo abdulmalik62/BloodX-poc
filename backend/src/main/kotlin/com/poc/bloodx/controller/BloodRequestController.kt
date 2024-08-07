@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.CrossOrigin
 
 @RestController
-@RequestMapping("/BloodX/BloodRequest")
+@RequestMapping("/BloodX/Hospital")
 @CrossOrigin("\${CrossOrigin}")
 class BloodRequestController(private val bloodRequestService: BloodRequestService) {
 
-    @PostMapping("/Create")
-    fun createAdmin(@RequestBody bloodRequest: BloodRequest) : ResponseEntity<BloodRequest>{
-        val savedBloodRequest = bloodRequestService.saveAdmin(bloodRequest)
-        return ResponseEntity(savedBloodRequest, HttpStatus.CREATED)
+    @PostMapping("/AddBloodRequest")
+    fun createAdmin(@RequestBody bloodRequest: BloodRequest) : String{
+        val id = bloodRequestService.addBloodRequest(bloodRequest)
+        return "Request placed. Your id is: $id";
     }
 
     @GetMapping("/GetAll")
@@ -27,4 +27,6 @@ class BloodRequestController(private val bloodRequestService: BloodRequestServic
         val bloodRequest = bloodRequestService.getAllBloodRequest()
         return ResponseEntity(bloodRequest, HttpStatus.OK)
     }
+
+    
 }

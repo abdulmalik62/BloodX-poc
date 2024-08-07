@@ -1,35 +1,58 @@
 package com.poc.bloodx.workflow
 
-import io.temporal.workflow.Workflow
 import io.temporal.activity.ActivityOptions
-import java.time.Duration;
+import io.temporal.common.RetryOptions
+import io.temporal.workflow.Workflow
+// import io.temporal.activity.ActivityStub // Import ActivityStub
+import java.time.Duration
+import com.poc.bloodx.activity.BloodRequestActivity
 
-class BloodRequestWorkflowImpl : BloodRequestWorkflow {
+class BloodRequestWorkflowImpl : BloodRequestWorkFlow {
 
-
-    /*
-     * At least one of the following options needs to be defined:
-     * - setStartToCloseTimeout
-     * - setScheduleToCloseTimeout
-     */
-    private val options = ActivityOptions.newBuilder()
-        .setStartToCloseTimeout(Duration.ofSeconds(120))
+    private val retryOptions = RetryOptions.newBuilder()
+        .setInitialInterval(Duration.ofSeconds(1))
+        .setMaximumInterval(Duration.ofSeconds(100))
+        .setBackoffCoefficient(2.0)
+        .setMaximumAttempts(50000)
         .build()
 
-    /*
-     * Define the HelloWorldActivity stub. Activity stubs are proxies for activity invocations that
-     * are executed outside of the workflow thread on the activity worker, that can be on a
-     * different host. Temporal is going to dispatch the activity results back to the workflow and
-     * unblock the stub as soon as activity is completed on the activity worker.
-     *
-     * The activity options that were defined above are passed in as a parameter.
-     */
-    private val activity: BloodRequestActivities = Workflow.newActivityStub(BloodRequestActivities::class.java,options)
-    // private val activity: HelloWorldActivities = Workflow.newActivityStub(HelloWorldActivities::class.java, options)
+    private val options = ActivityOptions.newBuilder()
+        .setStartToCloseTimeout(Duration.ofSeconds(30))
+        .setRetryOptions(retryOptions)
+        .build()
 
-    override fun handleBloodRequest(requestId: String): String {
-        // Example logic to handle blood request
-        // Replace with actual logic
-        return activity.processBloodRequest(requestId)
+    private val activity: BloodRequestActivity = Workflow.newActivityStub(BloodRequestActivity::class.java, options)
+
+    var isOrderConfirmed = false
+
+    var isOrderPickedUp = false
+
+    var isOrderDelivered = false
+
+    override fun bloodRequestStartedWorkflow() {
+        activity.placeBloodRequest()
+
+        println("***** Waiting for BLOOD BANK to confirm blood availability")
+        Workflow.await { isOrderConfirmed }
+
+        println("***** Please wait till we assign a Phlebotomist")
+        Workflow.await { isOrderPickedUp }
+
+        Workflow.await { isOrderDelivered }
+    }
+
+    override fun signalOrderAccepted() {
+        activity.setOrderAccepted()
+        isOrderConfirmed = true
+    }
+
+    override fun signalOrderPickedUp() {
+        activity.setOrderPickedUp()
+        isOrderPickedUp = true
+    }
+
+    override fun signalOrderDelivered() {
+        activity.setOrderDelivered()
+        isOrderDelivered = true
     }
 }
