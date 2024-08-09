@@ -9,10 +9,11 @@ import io.temporal.client.WorkflowClientOptions
 import io.temporal.serviceclient.WorkflowServiceStubs
 import io.temporal.serviceclient.WorkflowServiceStubsOptions
 import io.temporal.worker.WorkerFactory
+import com.poc.bloodx.repository.BloodRequestRepository
 
 @Component
 @Configuration
-class TemporalConfig {
+class TemporalConfig(private val bloodRequestRepository: BloodRequestRepository) {
 
     private val temporalServiceAddress = "localhost:7233"
     private val temporalNamespace = "default"
@@ -39,6 +40,6 @@ class TemporalConfig {
 
     @Bean
     fun signUpActivity(): BloodRequestActivityImpl {
-        return BloodRequestActivityImpl()
+        return BloodRequestActivityImpl(bloodRequestRepository)
     }
 }

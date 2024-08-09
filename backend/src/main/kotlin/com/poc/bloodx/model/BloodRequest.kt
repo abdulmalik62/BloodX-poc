@@ -13,6 +13,7 @@ class BloodRequest(var patientname: String,
             var phone: Long,
             var location: String,
             var requiredbefore: LocalDate,
+            var status: String? = null,
             @Id
             @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "admin_seq")
             @SequenceGenerator(name = "admin_seq", sequenceName = "admin_seq", allocationSize = 1)

@@ -12,26 +12,33 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.*
 
+
 @RestController
 @RequestMapping("/BloodX/BloodBank")
 @CrossOrigin("\${CrossOrigin}")
 class BloodBankController(private val bloodRequestService: BloodRequestService) {
 
     @PostMapping("/BloodRequestConfirmation")
-    fun orderAccepted(@RequestParam("id") id: String): String {
+    fun orderAccepted(@RequestParam("id") id: Long): String {
         bloodRequestService.makeOrderAccepted(id)
         return "Blood request confirmed"
     }
 
     @PostMapping("/PhlebotomistConfirmation")
-    fun orderPickedUp(@RequestParam("id") id: String): String {
+    fun orderPickedUp(@RequestParam("id") id: Long): String {
         bloodRequestService.makeOrderPickedUp(id)
         return "Blood shipped"
     }
 
     @PostMapping("/BloodDelivered")
-    fun orderDelivered(@RequestParam("id") id: String): String {
+    fun orderDelivered(@RequestParam("id") id: Long): String {
         bloodRequestService.makeOrderDelivered(id)
         return "Delivered successfully"
+    }
+
+    @GetMapping("/GetAllByStatus")
+    fun getAllBloodRequests(@RequestParam status: String): ResponseEntity<List<BloodRequest>> {
+        val bloodRequests = bloodRequestService.getBloodRequestsByStatus(status)
+        return ResponseEntity(bloodRequests, HttpStatus.OK)
     }
 }
