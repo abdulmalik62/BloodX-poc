@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RequestHeader
+// import org.springframework.security.access.prepost.PreAuthorize
+import okhttp3.Response
 
 @RestController
 @RequestMapping("/BloodX/Hospital")
@@ -24,10 +27,24 @@ class BloodRequestController(private val bloodRequestService: BloodRequestServic
     }
 
     @GetMapping("/GetAll")
-    fun getAllBloodRequest(): ResponseEntity<List<BloodRequest>> {
-        val bloodRequest = bloodRequestService.getAllBloodRequest()
+    fun getAllBloodRequest(@RequestHeader("Authorization") authorizationHeader: String): ResponseEntity<List<BloodRequest>> {
+        // Extract the token from the Authorization header
+        val token = authorizationHeader.removePrefix("Bearer ").trim()
+
+        val bloodRequest = bloodRequestService.getAllBloodRequest(token)
+
         return ResponseEntity(bloodRequest, HttpStatus.OK)
     }
+
+    // @GetMapping("/GetAll")
+    // fun getAllBloodRequest(): ResponseEntity<String> {
+    //     val response: Response = bloodRequestService.performApiCall()
+
+    //     // Extract the response body as a String
+    //     val responseBody = response.body?.string()
+
+    //     return ResponseEntity(responseBody ?: "No content", HttpStatus.OK)
+    // }
 
     @GetMapping("/GetAllByStatus")
     fun getAllBloodRequests(@RequestParam status: String): ResponseEntity<List<BloodRequest>> {

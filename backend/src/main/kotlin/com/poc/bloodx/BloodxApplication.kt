@@ -8,8 +8,10 @@ import io.temporal.worker.WorkerFactory
 import com.poc.bloodx.activity.BloodRequestActivity
 import com.poc.bloodx.workflow.BloodRequestWorkFlow
 import com.poc.bloodx.workflow.BloodRequestWorkflowImpl
+import org.springframework.context.annotation.ComponentScan
 
 @SpringBootApplication
+@ComponentScan(basePackages = ["com.poc.bloodx.config", "com.poc.bloodx"])
 class BloodxApplication
 
 fun main(args: Array<String>) {
