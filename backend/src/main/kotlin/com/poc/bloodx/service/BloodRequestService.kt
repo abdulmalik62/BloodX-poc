@@ -137,7 +137,7 @@ class BloodRequestService @Autowired constructor(
 
     fun getAllBloodRequest(token: String): List<BloodRequest> {
 
-        val requiredRoles = listOf("Hospital")
+        val requiredRoles = listOf("Hospital","Dev")
 
         // Call the API with the token and get the roles
         val response = apiClient.callApi(url, token)
@@ -157,7 +157,24 @@ class BloodRequestService @Autowired constructor(
         return bloodRequestRepository.findAll()
     }
 
-    fun getBloodRequestsByStatus(status: String): List<BloodRequest> {
+    fun getBloodRequestsByStatus(status: String, token: String): List<BloodRequest> {
+        
+        val requiredRoles = listOf("Hospital","Dev","Blood Bank")
+
+        // Call the API with the token and get the roles
+        val response = apiClient.callApi(url, token)
+
+        // Convert ResponseBody to String
+        val responseBodyString = response.body?.string()
+
+        val roles = extractRoles(responseBodyString)
+
+        // Check if the user has the required role
+        if (!roles.any { it in requiredRoles }) {
+            val rolesString = roles.joinToString(", ")
+            throw UnauthorizedException("$rolesString user does not have the required role to access this resource")
+        }
+
         return bloodRequestRepository.findByStatus(status)
     }
 }

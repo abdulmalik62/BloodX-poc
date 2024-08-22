@@ -37,8 +37,9 @@ class BloodBankController(private val bloodRequestService: BloodRequestService) 
     }
 
     @GetMapping("/GetAllByStatus")
-    fun getAllBloodRequests(@RequestParam status: String): ResponseEntity<List<BloodRequest>> {
-        val bloodRequests = bloodRequestService.getBloodRequestsByStatus(status)
+    fun getAllBloodRequests(@RequestHeader("Authorization") authorizationHeader: String,@RequestParam status: String): ResponseEntity<List<BloodRequest>> {
+        val token = authorizationHeader.removePrefix("Bearer ").trim()
+        val bloodRequests = bloodRequestService.getBloodRequestsByStatus(status,token)
         return ResponseEntity(bloodRequests, HttpStatus.OK)
     }
 }
