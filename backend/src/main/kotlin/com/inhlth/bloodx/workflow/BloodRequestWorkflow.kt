@@ -1,8 +1,8 @@
-package com.poc.bloodx.workflow
+package com.inhlth.bloodx.workflow
 
 import io.temporal.workflow.SignalMethod
 import io.temporal.workflow.WorkflowInterface
-import com.poc.bloodx.model.BloodRequest
+import com.inhlth.bloodx.model.BloodRequest
 import io.temporal.workflow.WorkflowMethod
 import io.temporal.workflow.QueryMethod
 

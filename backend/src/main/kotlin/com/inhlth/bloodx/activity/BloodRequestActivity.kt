@@ -1,8 +1,8 @@
-package com.poc.bloodx.activity
+package com.inhlth.bloodx.activity
 
 import io.temporal.activity.ActivityInterface
 import io.temporal.activity.ActivityMethod
-import com.poc.bloodx.model.BloodRequest
+import com.inhlth.bloodx.model.BloodRequest
 
 @ActivityInterface
 interface BloodRequestActivity {

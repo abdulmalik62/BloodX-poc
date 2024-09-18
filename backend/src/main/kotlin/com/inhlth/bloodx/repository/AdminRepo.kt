@@ -1,6 +1,6 @@
-package com.poc.bloodx.repository
+package com.inhlth.bloodx.repository
 
-import com.poc.bloodx.model.Admin
+import com.inhlth.bloodx.model.Admin
 import org.springframework.data.jpa.repository.JpaRepository;
 
 interface AdminRepository : JpaRepository<Admin,Long>

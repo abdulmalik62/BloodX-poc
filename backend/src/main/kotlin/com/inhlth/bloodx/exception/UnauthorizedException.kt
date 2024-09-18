@@ -1,3 +1,3 @@
-package com.poc.bloodx.exception
+package com.inhlth.bloodx.exception
 
 class UnauthorizedException(message: String) : RuntimeException(message)

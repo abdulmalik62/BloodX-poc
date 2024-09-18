@@ -1,7 +1,7 @@
-package com.poc.bloodx.activity
+package com.inhlth.bloodx.activity
 
-import com.poc.bloodx.model.BloodRequest
-import com.poc.bloodx.repository.BloodRequestRepository
+import com.inhlth.bloodx.model.BloodRequest
+import com.inhlth.bloodx.repository.BloodRequestRepository
 import java.util.Optional
 
 class BloodRequestActivityImpl(private val bloodRequestRepository: BloodRequestRepository) : BloodRequestActivity {

@@ -1,4 +1,4 @@
-package com.poc.bloodx.model
+package com.inhlth.bloodx.model
 
 import jakarta.persistence.*
 

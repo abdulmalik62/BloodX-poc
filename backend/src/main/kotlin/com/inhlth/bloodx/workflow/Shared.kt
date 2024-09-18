@@ -1,4 +1,4 @@
-package com.poc.bloodx.workflow
+package com.inhlth.bloodx.workflow
 
 public interface Shared {
     companion object {

@@ -1,7 +1,7 @@
-package com.poc.bloodx.controller
+package com.inhlth.bloodx.controller
 
-import com.poc.bloodx.model.Admin
-import com.poc.bloodx.service.AdminService
+import com.inhlth.bloodx.model.Admin
+import com.inhlth.bloodx.service.AdminService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping

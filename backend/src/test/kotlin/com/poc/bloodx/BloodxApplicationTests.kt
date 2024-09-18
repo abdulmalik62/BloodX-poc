@@ -1,9 +1,9 @@
-package com.poc.bloodx
+package com.inhlth.bloodx
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
-import com.poc.bloodx.config.OkHttpClientConfig
+import com.inhlth.bloodx.config.OkHttpClientConfig
 
 @SpringBootTest
 @Import(OkHttpClientConfig::class)

@@ -1,11 +1,11 @@
-package com.poc.bloodx.workflow
+package com.inhlth.bloodx.workflow
 
 import io.temporal.activity.ActivityOptions
 import io.temporal.common.RetryOptions
 import io.temporal.workflow.Workflow
-import com.poc.bloodx.model.BloodRequest
+import com.inhlth.bloodx.model.BloodRequest
 import java.time.Duration
-import com.poc.bloodx.activity.BloodRequestActivity
+import com.inhlth.bloodx.activity.BloodRequestActivity
 
 class BloodRequestWorkflowImpl : BloodRequestWorkFlow {
 

@@ -1,7 +1,7 @@
-package com.poc.bloodx.service
+package com.inhlth.bloodx.service
 
-import com.poc.bloodx.model.Admin
-import com.poc.bloodx.repository.AdminRepository
+import com.inhlth.bloodx.model.Admin
+import com.inhlth.bloodx.repository.AdminRepository
 import org.springframework.stereotype.Service
 
 @Service

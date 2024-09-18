@@ -1,4 +1,4 @@
-package com.poc.bloodx.config
+package com.inhlth.bloodx.config
 
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
